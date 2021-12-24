@@ -1,0 +1,64 @@
+from matplotlib import pyplot as plot
+from ogconstants import *
+import numpy as np
+balance = float(input("Enter balance/paycheck: $"))
+bond_amount = round(BOND_RATIO * balance, 2)
+save_amount = round(SAVE_RATIO * balance, 2)
+spend_amount = round(SPEND_RATIO * balance, 2)
+invest_amount = round(INVEST_RATIO * balance, 2)
+ira_amount = round(IRA_RATIO * balance, 2)
+
+years = int(input("Input amount of years you would like interest to compound: "))
+if (years > 1):
+    x = np.arange(years+1)
+elif (years == 1):
+    x = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
+    
+bondline = np.array((bond_amount * BOND_AVG_RETURN *  x) + bond_amount)
+saveline = np.array((save_amount * SAVINGS_AVG_RETURN *  x) + save_amount)
+iraline = np.array((ira_amount * INVEST_AVG_RETURN *  x) + ira_amount)
+investline = np.array((invest_amount * INVEST_AVG_RETURN *  x) + invest_amount)
+plot.figure(0)
+plot.stackplot(x, bondline, saveline, iraline, investline)
+plot.legend(["Bonds", "Savings", "IRA", "Investments"], loc = "lower right")
+plot.xlabel("Year")
+plot.ylabel("$$$")
+plot.title('Assets per year (No inflation)')
+
+c = years
+print("Money spent: $" + str(spend_amount))
+preAssets = bondline[0]+saveline[0]+iraline[0]+investline[0]
+postAssets = bondline[c]+saveline[c]+iraline[c]+investline[c]
+print("Assets after " + str(years) + " years (no inflation): $" + str(postAssets))
+print("Gross gain of investment (no inflation): $" +str(postAssets-preAssets))
+
+
+saveline = (save_amount * SAVINGS_AVG_RETURN *  x) + save_amount - (AVG_INFLATION * x * save_amount)
+bondline = (bond_amount * BOND_AVG_RETURN *  x) + bond_amount - (AVG_INFLATION * x * bond_amount)
+iraline = (ira_amount * INVEST_AVG_RETURN *  x) + ira_amount - (AVG_INFLATION * x * ira_amount)
+investline = (invest_amount * INVEST_AVG_RETURN *  x) + invest_amount - (AVG_INFLATION * x * invest_amount)
+
+preAssets = bondline[0]+saveline[0]+iraline[0]+investline[0]
+postAssets = bondline[c]+saveline[c]+iraline[c]+investline[c]
+print("Assets after " + str(years) + " years (no inflation): $" + str(postAssets))
+print("Gross gain of investment (2% inflation): $" +str(postAssets-preAssets))
+
+
+
+plot.figure(1)
+plot.stackplot(x, bondline, saveline, iraline, investline)
+plot.legend(["Bonds", "Savings", "IRA", "Investments"], loc = "lower right")
+plot.xlabel("Year")
+plot.ylabel("$$$")
+plot.title('Assets per year (2% inflation)')
+print("Assets after " + str(years) + " years (2% inflation): $" + str(bondline[c]+saveline[c]+iraline[c]+investline[c]))
+plot.figure(2)
+plot.plot(x, bondline)
+plot.plot(x, saveline)
+plot.plot(x, iraline)
+plot.plot(x, investline)
+
+plot.legend(["Bonds", "Savings", "IRA", "Investments"], loc = "lower right")
+plot.xlabel("Year")
+plot.ylabel("$$$")
+plot.title('Assets per year (2% inflation)')
