@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plot
-from ogconstants import *
+from constants import *
 import numpy as np
 balance = float(input("Enter balance/paycheck: $"))
 bond_amount = round(BOND_RATIO * balance, 2)
