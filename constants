@@ -1,0 +1,12 @@
+# Determines how money should be split:
+SPEND_RATIO = 0.10
+SAVE_RATIO = 0.50
+BOND_RATIO = 0.20
+INVEST_RATIO = 0.13
+IRA_RATIO = 0.07
+#Constants used to calculate future returns:
+SAVINGS_AVG_RETURN = 0.005
+INVEST_AVG_RETURN = 0.10
+BOND_AVG_RETURN = 0.02
+AVG_INFLATION = 0.02
+WEEKS_PER_YEAR = 52
